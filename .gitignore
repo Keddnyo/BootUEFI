@@ -171,3 +171,4 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.gitignore.io/api/linux,windows,androidstudio
+app/release/output-metadata.json

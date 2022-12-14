@@ -1,32 +1,34 @@
 package io.github.keddnyo.bootuefi;
 
 import android.app.Activity;
-import android.os.Bundle;
-import java.io.IOException;
 
 public class MainActivity extends Activity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onResume() {
+        super.onResume();
 
         Runtime runtime = Runtime.getRuntime();
-        String[] firstCommand = new String[]{
-                "su",
-                "-c",
-                "mount -t efivars efivars"
-        };
-        String[] secondCommand = new String[]{
-                "su",
-                "-c",
-                "printf \"\\x07\\x00\\x00\\x00\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\" > /sys/firmware/efi/efivars/OsIndications-8be4df61-93ca-11d2-aa0d-00e098032b8c"
-        };
+
+        String[] mount = command("mount -t efivars efivars");
+        String[] uefi = command("printf \"\\x07\\x00\\x00\\x00\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\" > /sys/firmware/efi/efivars/OsIndications-8be4df61-93ca-11d2-aa0d-00e098032b8c");
+        String[] reboot = command("reboot");
+
         try {
-            runtime.exec(firstCommand);
-            runtime.exec(secondCommand).waitFor();
-            runtime.exec("reboot");
-        } catch (IOException | InterruptedException e) {
+            runtime.exec(mount).waitFor();
+            runtime.exec(uefi).waitFor();
+            runtime.exec(reboot);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    String[] command(String command) {
+        return new String[]{
+                "su",
+                "-c",
+                command
+        };
+    }
+
 }
