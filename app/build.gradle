@@ -1,0 +1,29 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'io.github.keddnyo.bootuefi'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "io.github.keddnyo.bootuefi"
+        minSdk 16
+        targetSdk 33
+        versionCode 1
+        versionName "1.0.0"
+        resConfigs 'en'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
