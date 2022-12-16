@@ -3,8 +3,7 @@
 
     <application
         android:icon="@android:color/holo_red_dark"
-        android:label="EFI"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        android:label="EFI">
         <activity
             android:name=".MainActivity"
             android:exported="true">
